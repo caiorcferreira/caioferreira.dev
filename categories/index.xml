@@ -4,11 +4,6 @@
     <title>Categories on Simple Made Daily</title>
     <link>https://caioferreira.dev/categories/</link>
     <description>Recent content in Categories on Simple Made Daily</description>
-    <image>
-      <title>Simple Made Daily</title>
-      <url>https://caioferreira.dev/papermod-cover.png</url>
-      <link>https://caioferreira.dev/papermod-cover.png</link>
-    </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://caioferreira.dev/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
