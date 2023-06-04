@@ -60,7 +60,7 @@ params:
     ShowToc: false
     ShowBreadCrumbs: false
     # comments: false
-    images: ["papermod-cover.png"]
+    # images: ["papermod-cover.png"]
 
     ShareButtons:
     - twitter
