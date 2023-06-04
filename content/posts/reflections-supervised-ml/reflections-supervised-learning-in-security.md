@@ -6,9 +6,10 @@ tags: ["ml", "security", "supervised-learning", "ai"]
 math: true
 ShowToc: false
 ShowBreadCrumbs: false
+hideSummary: true
 ---
 
-Supervised learning is a technique that aims to learn a hypothesis function _h_ that fits a behavior observed in the real-world, which is governed by an unknown function $f$.
+Supervised learning is a technique that aims to learn a hypothesis function $h$ that fits a behavior observed in the real-world, which is governed by an unknown function $f$.
 
 To learn this function, we use a set of example data points composed of inputs (also called features) and outcomes (sometimes called labels). These example data points were sampled from the real world behavior, i.e. from the function $f$, at some time in the past. Our goal is that we can extract knowledge from the past to figure out this behavior on unseen data beforehand. This knowledge extracted from the set of examples is materialized on the $h$ function.
 

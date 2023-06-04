@@ -62,11 +62,22 @@ params:
     # comments: false
     images: ["papermod-cover.png"]
 
+    ShareButtons:
+    - twitter
+    - linkedin
+    - reddit
+
+
     profileMode:
         enabled: true
         title: Caio Ferreira
-        subtitle: >
-            I'm passionate about unique puzzles and always trying to improve others developers' life.
+        subtitle: |
+            I'm a software engineer passionate about unique puzzles and improving others developers' life.
+            
+            Do not believe in the *daily*, I write whenever I can.
+        
+
+            Security **|** Golang **|** Kubernetes **|** Architecture
         imageUrl: "images/self.png"
         imageTitle: self
         imageWidth: 300
@@ -86,7 +97,7 @@ params:
         appendFilePath: true # to append file path to Edit link
 
     label:
-        text: "Simple Made Daily"
+        text: Simple Made Daily
         icon: logo.png
         iconHeight: 28
         iconWidth: 28
