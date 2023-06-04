@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>supervised-learning on Simple Made Daily</title>
+    <link>https://caioferreira.dev/tags/supervised-learning/</link>
+    <description>Recent content in supervised-learning on Simple Made Daily</description>
+    <image>
+      <title>Simple Made Daily</title>
+      <url>https://caioferreira.dev/papermod-cover.png</url>
+      <link>https://caioferreira.dev/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 23 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/supervised-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reflections about Supervised Learning on Security</title>
+      <link>https://caioferreira.dev/posts/reflections-supervised-ml/reflections-supervised-learning-in-security/</link>
+      <pubDate>Sun, 23 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/reflections-supervised-ml/reflections-supervised-learning-in-security/</guid>
+      <description>Supervised learning is a technique that aims to learn a hypothesis function $h$ that fits a behavior observed in the real-world, which is governed by an unknown function $f$.
+To learn this function, we use a set of example data points composed of inputs (also called features) and outcomes (sometimes called labels). These example data points were sampled from the real world behavior, i.e. from the function $f$, at some time in the past.</description>
+    </item>
+    
+  </channel>
+</rss>
