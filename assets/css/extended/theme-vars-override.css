@@ -1,12 +1,12 @@
 :root {
   --theme: #faf6f8;
-  --entry: #fdfafc;
+  --entry: #fefdfd;
   --primary: #22333B;
   --secondary: #22333B;
   --tertiary: #BCD274;
   --content: #22333B;
   --hljs-bg: #1c1d21;
-  --code-bg: #fdfafc;
+  --code-bg: #faf6f8;
   --border: #eee;
 }
 
