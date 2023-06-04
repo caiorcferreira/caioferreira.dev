@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>programming on Simple Made Daily</title>
+    <link>https://caioferreira.dev/tags/programming/</link>
+    <description>Recent content in programming on Simple Made Daily</description>
+    <image>
+      <title>Simple Made Daily</title>
+      <url>https://caioferreira.dev/papermod-cover.png</url>
+      <link>https://caioferreira.dev/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 31 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Technical Debt as your next Tool</title>
+      <link>https://caioferreira.dev/posts/technical-debt/technical-debt-tool/</link>
+      <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/technical-debt/technical-debt-tool/</guid>
+      <description>Quick Summary In this post I will show you what is the debt that we collect with during the software lifecycle, what are its causes and how to pay it back.
+Introduction Often we are faced with a dilemma in software development: implement the best solution for the feature or delivery it quickly but assuming some workarounds and code smells? Whichever side you choose, will be a cost.
+This cost is even greater if you work on legacy projects or high changing environments.</description>
+    </item>
+    
+  </channel>
+</rss>

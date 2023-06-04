@@ -22,5 +22,27 @@
 To learn this function, we use a set of example data points composed of inputs (also called features) and outcomes (sometimes called labels). These example data points were sampled from the real world behavior, i.e. from the function $f$, at some time in the past.</description>
     </item>
     
+    <item>
+      <title>Using Technical Debt as your next Tool</title>
+      <link>https://caioferreira.dev/posts/technical-debt/technical-debt-tool/</link>
+      <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/technical-debt/technical-debt-tool/</guid>
+      <description>Quick Summary In this post I will show you what is the debt that we collect with during the software lifecycle, what are its causes and how to pay it back.
+Introduction Often we are faced with a dilemma in software development: implement the best solution for the feature or delivery it quickly but assuming some workarounds and code smells? Whichever side you choose, will be a cost.
+This cost is even greater if you work on legacy projects or high changing environments.</description>
+    </item>
+    
+    <item>
+      <title>Difference between state and State</title>
+      <link>https://caioferreira.dev/posts/difference-between-state-and-state/</link>
+      <pubDate>Tue, 18 Dec 2018 12:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/difference-between-state-and-state/</guid>
+      <description>Photo by Annie Spratt on Unsplash
+Today we will try to solve the ambiguity in the concept of state, highlighting the differences in the two main notions about it. The post describes the nature of each one, some use cases and how they fit in the object and functional paradigms.
+Introduction On the last couple of months, I dove into the topic of State Machines and how we can design UI’s with this concept in order to provide better semantic and predictability to our application.</description>
+    </item>
+    
   </channel>
 </rss>
