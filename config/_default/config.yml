@@ -52,6 +52,7 @@ params:
     ShowShareButtons: true
     ShowReadingTime: true
     # disableSpecial1stPost: true
+    disableScrollToTop: true
     displayFullLangName: true
     ShowPostNavLinks: false
     ShowBreadCrumbs: true
@@ -84,10 +85,11 @@ params:
         Text: "Suggest Changes" # edit text
         appendFilePath: true # to append file path to Edit link
 
-    # label:
-    #     text: "Home"
-    #     icon: icon.png
-    #     iconHeight: 35
+    label:
+        text: "Simple Made Daily"
+        icon: logo.png
+        iconHeight: 28
+        iconWidth: 28
 
     # analytics:
     #     google:

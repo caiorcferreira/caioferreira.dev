@@ -2,7 +2,6 @@
 author: "Caio Ferreira"
 title: "Reflections about Supervised Learning on Security"
 date: "2023-04-23"
-description: "Some thoughts on how the nature of Security influences decisions to build supervised learning models."
 tags: ["ml", "security", "supervised-learning", "ai"]
 math: true
 ShowToc: false
