@@ -107,12 +107,8 @@ params:
     #         SiteVerificationTag: "XYZabc"
 
     assets:
-        disableHLJS: true
+        disableHLJS: false
         favicon: "favicon.png"
-    #     favicon16x16: "<link / abs url>"
-    #     favicon32x32: "<link / abs url>"
-    #     apple_touch_icon: "<link / abs url>"
-    #     safari_pinned_tab: "<link / abs url>"
 
     cover:
         hidden: true # hide everywhere but not in structured data
@@ -134,11 +130,11 @@ markup:
             unsafe: true
     highlight:
         noClasses: false
-        # anchorLineNos: true
-        # codeFences: true
-        # guessSyntax: true
-        # lineNos: true
-        # style: monokai
+        anchorLineNos: true
+        codeFences: true
+        guessSyntax: true
+        lineNos: false
+        style: monokai
 
 privacy:
     vimeo:
