@@ -3,7 +3,6 @@ body {
   font-weight: 400;
 }
 
-
 .profile_inner .social-icons {
   margin-top: 2rem;
 }
@@ -15,4 +14,9 @@ body {
 
 .profile_inner span p:nth-child(1) {
   margin-bottom: 1rem;
+}
+
+.post-content h1 {
+  margin: 40px auto 10px;
+  font-size: 40px;
 }
