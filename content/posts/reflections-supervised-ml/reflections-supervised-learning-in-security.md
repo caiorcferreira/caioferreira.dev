@@ -4,8 +4,6 @@ title: "Reflections about Supervised Learning on Security"
 date: "2023-04-23"
 tags: ["ml", "security", "supervised-learning", "ai"]
 math: true
-ShowToc: false
-ShowBreadCrumbs: false
 hideSummary: true
 ---
 

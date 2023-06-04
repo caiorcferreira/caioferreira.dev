@@ -55,10 +55,10 @@ params:
     disableScrollToTop: true
     displayFullLangName: true
     ShowPostNavLinks: false
-    ShowBreadCrumbs: true
     ShowCodeCopyButtons: true
     ShowRssButtonInSectionTermList: true
-    ShowToc: true
+    ShowToc: false
+    ShowBreadCrumbs: false
     # comments: false
     images: ["papermod-cover.png"]
 
