@@ -17,5 +17,14 @@
 To learn this function, we use a set of example data points composed of inputs (also called features) and outcomes (sometimes called labels). These example data points were sampled from the real world behavior, i.e. from the function $f$, at some time in the past.</description>
     </item>
     
+    <item>
+      <title>Implementing a safe and sound API Key authorization middleware in Go</title>
+      <link>https://caioferreira.dev/posts/golang-secure-api-key-middleware/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/golang-secure-api-key-middleware/</guid>
+      <description>How to design a more secure API Key handling in Go</description>
+    </item>
+    
   </channel>
 </rss>

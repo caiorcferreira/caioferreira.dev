@@ -6,7 +6,16 @@
     <description>Recent content in javascript on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 18 Dec 2018 12:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Lambda Path</title>
+      <link>https://caioferreira.dev/posts/the-lambda-path/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/the-lambda-path/</guid>
+      <description>A collection of resources to help you out enter the world of Functional Programming</description>
+    </item>
+    
     <item>
       <title>Difference between state and State</title>
       <link>https://caioferreira.dev/posts/difference-between-state-and-state/</link>

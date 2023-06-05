@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>distributed systems on Simple Made Daily</title>
+    <link>https://caioferreira.dev/tags/distributed-systems/</link>
+    <description>Recent content in distributed systems on Simple Made Daily</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 04 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/distributed-systems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing Cache in your System</title>
+      <link>https://caioferreira.dev/posts/introducing-cache-in-your-system/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/introducing-cache-in-your-system/</guid>
+      <description>Before jumping into tutorials, let&amp;#39;s try to understagind how and if a cache fit in your architecture</description>
+    </item>
+    
+  </channel>
+</rss>

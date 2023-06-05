@@ -18,6 +18,42 @@ To learn this function, we use a set of example data points composed of inputs (
     </item>
     
     <item>
+      <title>Implementing a safe and sound API Key authorization middleware in Go</title>
+      <link>https://caioferreira.dev/posts/golang-secure-api-key-middleware/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/golang-secure-api-key-middleware/</guid>
+      <description>How to design a more secure API Key handling in Go</description>
+    </item>
+    
+    <item>
+      <title>The Kubernetes dynamic client</title>
+      <link>https://caioferreira.dev/posts/the-kubernetes-dynamic-client/</link>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/the-kubernetes-dynamic-client/</guid>
+      <description>A dive into a hidden tool to build Controllers and Operators</description>
+    </item>
+    
+    <item>
+      <title>Introducing Cache in your System</title>
+      <link>https://caioferreira.dev/posts/introducing-cache-in-your-system/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/introducing-cache-in-your-system/</guid>
+      <description>Before jumping into tutorials, let&amp;#39;s try to understagind how and if a cache fit in your architecture</description>
+    </item>
+    
+    <item>
+      <title>The Lambda Path</title>
+      <link>https://caioferreira.dev/posts/the-lambda-path/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/the-lambda-path/</guid>
+      <description>A collection of resources to help you out enter the world of Functional Programming</description>
+    </item>
+    
+    <item>
       <title>Using Technical Debt as your next Tool</title>
       <link>https://caioferreira.dev/posts/technical-debt/technical-debt-tool/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>

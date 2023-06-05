@@ -44,6 +44,105 @@
     </item>
     
     <item>
+      <title>authentication</title>
+      <link>https://caioferreira.dev/tags/authentication/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/authentication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>authorization</title>
+      <link>https://caioferreira.dev/tags/authorization/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/authorization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://caioferreira.dev/tags/go/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://caioferreira.dev/tags/kubernetes/</link>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
+      <link>https://caioferreira.dev/tags/testing/</link>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>architecture</title>
+      <link>https://caioferreira.dev/tags/architecture/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/architecture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>caching</title>
+      <link>https://caioferreira.dev/tags/caching/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/caching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>distributed systems</title>
+      <link>https://caioferreira.dev/tags/distributed-systems/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/distributed-systems/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>clojure</title>
+      <link>https://caioferreira.dev/tags/clojure/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/clojure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>functional</title>
+      <link>https://caioferreira.dev/tags/functional/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/functional/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>javascript</title>
+      <link>https://caioferreira.dev/tags/javascript/</link>
+      <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>programming</title>
       <link>https://caioferreira.dev/tags/programming/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
@@ -76,24 +175,6 @@
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://caioferreira.dev/tags/software-architecture/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>functional</title>
-      <link>https://caioferreira.dev/tags/functional/</link>
-      <pubDate>Tue, 18 Dec 2018 12:00:00 +0000</pubDate>
-      
-      <guid>https://caioferreira.dev/tags/functional/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>javascript</title>
-      <link>https://caioferreira.dev/tags/javascript/</link>
-      <pubDate>Tue, 18 Dec 2018 12:00:00 +0000</pubDate>
-      
-      <guid>https://caioferreira.dev/tags/javascript/</guid>
       <description></description>
     </item>
     

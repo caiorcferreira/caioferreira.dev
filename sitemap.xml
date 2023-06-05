@@ -26,6 +26,51 @@
     <loc>https://caioferreira.dev/tags/</loc>
     <lastmod>2023-04-23T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://caioferreira.dev/tags/authentication/</loc>
+    <lastmod>2022-02-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/authorization/</loc>
+    <lastmod>2022-02-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/go/</loc>
+    <lastmod>2022-02-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/golang-secure-api-key-middleware/</loc>
+    <lastmod>2022-02-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/kubernetes/</loc>
+    <lastmod>2021-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/testing/</loc>
+    <lastmod>2021-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/the-kubernetes-dynamic-client/</loc>
+    <lastmod>2021-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/architecture/</loc>
+    <lastmod>2020-05-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/caching/</loc>
+    <lastmod>2020-05-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/distributed-systems/</loc>
+    <lastmod>2020-05-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/introducing-cache-in-your-system/</loc>
+    <lastmod>2020-05-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/clojure/</loc>
+    <lastmod>2019-10-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/functional/</loc>
+    <lastmod>2019-10-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/javascript/</loc>
+    <lastmod>2019-10-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/the-lambda-path/</loc>
+    <lastmod>2019-10-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://caioferreira.dev/tags/programming/</loc>
     <lastmod>2019-03-31T00:00:00+00:00</lastmod>
   </url><url>
@@ -42,12 +87,6 @@
     <lastmod>2019-03-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://caioferreira.dev/posts/difference-between-state-and-state/</loc>
-    <lastmod>2018-12-18T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://caioferreira.dev/tags/functional/</loc>
-    <lastmod>2018-12-18T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://caioferreira.dev/tags/javascript/</loc>
     <lastmod>2018-12-18T12:00:00+00:00</lastmod>
   </url><url>
     <loc>https://caioferreira.dev/tags/oop/</loc>
