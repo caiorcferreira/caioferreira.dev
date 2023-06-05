@@ -29,7 +29,7 @@ Extending the metaphor, we can see financial debt as a resource uptake from some
 
 Although the best solution vs quick & dirty decision is an excellent example to introduce technical debt, it isn't its only source. As Fowler (2009) [points out](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html), this case is just a Prudent and Deliberate debt, where the team is aware of the cost it is incurring and know how to pay it back. But we can have four types of debt in total.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678965851191/MMlnGm0h1.png?auto=compress)
+![](./tech-debt-quadrant.png)
 
 Each debt type has a source associated with it:
 
@@ -44,7 +44,7 @@ Of course, this exploration does not exhaust the possible causes for technical d
 
 Since the debt causes can be so many, projects can experience an ever-increasing technical debt, to the point where adding new functionality, fix current bugs and operate the application becomes impossible.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678965872853/gLv1Yjwzc.png?auto=compress)
+![](./failure-rate.png)
 
 This type of scenario can be catastrophic, because while the team lives with this application they will lose agility, will observe an increasing bug count, have loss of motivation, increased stress, long production problems (long living bugs), customer complains and possible single points of failure in case only a few people know how to develop and operate the project.
 
