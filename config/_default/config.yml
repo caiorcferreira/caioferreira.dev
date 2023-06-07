@@ -59,6 +59,7 @@ params:
     ShowRssButtonInSectionTermList: true
     ShowToc: false
     ShowBreadCrumbs: false
+    ShowFullTextinRSS: true
     # comments: false
     # images: ["papermod-cover.png"]
 
