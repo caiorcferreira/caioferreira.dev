@@ -14,6 +14,383 @@
       
       <guid>https://caioferreira.dev/posts/the-kubernetes-dynamic-client/</guid>
       <description>A dive into a hidden tool to build Controllers and Operators</description>
+      <content:encoded><![CDATA[<p><img loading="lazy" src="./cover.png" alt=""  />
+</p>
+<h2 id="introduction">Introduction</h2>
+<p>Kubernetes won the battle for the cloud-native platform and the characteristic that makes me enjoy the most working with it is its extensibility. By providing an open model through the <code>kube-apiserver</code>, without splitting an internal and external interface, we can interact with the cluster and any other system to integrate both from the same application (Controller) and even use custom resources to describe our unique operations, know as the <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator Pattern</a>.</p>
+<p>Although one could use any HTTP Client to interact with the API Server, this is no simple task. There are many resources with different response structures and possible operations if we only consider the core resources on Kubernetes. Hence, Kubernetes itself provides a set of clients for easier integration through the <a href="https://github.com/kubernetes/client-go"><code>k8s.io/client-go</code> project</a>.</p>
+<p>The most used client provided by this project is the <code>k8s.io/client-go/kubernets.ClientSet</code>, which is a typed client. What that means is that this interface provides exclusive methods for each resource on Kubernetes (think of Pods, Deployments, Services, everything!) and operation (Create, Get, List, Watch, Update, Patch and Delete). It is obvious why you should, whenever possible, prefer to use this client.</p>
+<p>However, there are situations where this can be limiting. It is when <code>k8s.io/client-go/dynamic.Interface</code>, the dynamic client, will enter the game. This client has a twofold purpose:</p>
+<p>First, it allows working with custom resources while avoiding strong dependencies. If you want to build some automation or workflow using another Operator as the building block, like ExternalDNS, CertManager, or Prometheus (Operator) usually you would need to add these projects as dependencies to use their Go types and register them on your client instance. This obviously introduces a lot of burdens as you now need to manage their ever-evolving versions and try to keep the version you have installed on the cluster matching the version on your <code>go.mod</code>.</p>
+<p>Secondly, you can work with multiple or unknown resources. When your operator implements a generic logic that can interact with any common Kubernetes resource (from RBAC to Pods) and even custom resources, the dynamic client may be your only solution. A few examples are the garbage collection controller relies heavily on it and if you would want to add support for an arbitrary custom resource on a project like <a href="https://github.com/bitnami-labs/kubewatch">KubeWatch</a>.</p>
+<p>Therefore, let&rsquo;s dive into this resourceful (<em>pun intended</em>) component of the <a href="http://k8s.io/client-go"><code>k8s.io/client-go</code></a> project and see how we can leverage it.</p>
+<h2 id="basic-operations-with-the-dynamic-client">Basic operations with the dynamic client</h2>
+<blockquote>
+<p>The code below assumes to be running inside a Kubernetes cluster.</p>
+</blockquote>
+<p>Many operations with the dynamic client is similar to the typed client, like creating a new instance can be done by providing the config to its constructor:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">newClient</span><span class="p">()</span> <span class="p">(</span><span class="nx">dynamic</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">config</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rest</span><span class="p">.</span><span class="nf">InClusterConfig</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">dynClient</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">dynamic</span><span class="p">.</span><span class="nf">NewForConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">dynClient</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Since the dynamic client has no knowledge about the resource you want to consume, it does not provide helper methods like <code>CoreV1().Pod</code> . Instead, you need to first provide a <code>schema.GroupVersionResource</code>, which is a Golang type that provides the necessary information to construct an HTTP request to the cluster API Server.</p>
+<p>For example, if you want a function to list all MongoDB resources from the MongoDB Community Operator:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">monboDBResource</span> <span class="p">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">GroupVersionResource</span><span class="p">{</span><span class="nx">Group</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity.mongodb.com&#34;</span><span class="p">,</span> <span class="nx">Version</span><span class="p">:</span> <span class="s">&#34;v1&#34;</span><span class="p">,</span> <span class="nx">Resource</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ListMongoDB</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">client</span> <span class="nx">dynamic</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span> <span class="nx">namespace</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="nx">unstructured</span><span class="p">.</span><span class="nx">Unstructured</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// GET /apis/mongodbcommunity.mongodb.com/v1/namespaces/{namespace}/mongodbcommunity/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">list</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">client</span><span class="p">.</span><span class="nf">Resource</span><span class="p">(</span><span class="nx">monboDBResource</span><span class="p">).</span><span class="nf">Namespace</span><span class="p">(</span><span class="nx">namespace</span><span class="p">).</span><span class="nf">List</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ListOptions</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">list</span><span class="p">.</span><span class="nx">Items</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Note that if you are dealing with a namespaced resource then <code>.Namespace(namespace)</code> is obligatory, even if you will use an empty string to list on all namespaces.</p>
+<p>In this snippet, we can see the main companion of the dynamic client: <code>unstructured.Unstructured</code>. This is a special type that encapsulates an arbitrary JSON while also complying with standard Kubernetes interfaces like <code>runtime.Object</code> , but most importantly it provides a set of helpers on the <code>unstructured</code> package to manipulate this data.</p>
+<p>Expanding our example, if we would scale a MongoDB by an proportion we could do so like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// ScaleMongoDB changes the number of members by the given proportion,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// which should be 0 =&lt; proportion &lt; 1.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">ScaleMongoDB</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">client</span> <span class="nx">dynamic</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">namespace</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">proportion</span> <span class="kt">uint</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">proportion</span> <span class="p">&gt;</span> <span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;proportion should be between 0 =&lt; proportion &lt; 1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">mongoDBClient</span> <span class="o">:=</span> <span class="nx">client</span><span class="p">.</span><span class="nf">Resource</span><span class="p">(</span><span class="nx">monboDBResource</span><span class="p">).</span><span class="nf">Namespace</span><span class="p">(</span><span class="nx">namespace</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">mdb</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">mongoDBClient</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">GetOptions</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">members</span><span class="p">,</span> <span class="nx">found</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">unstructured</span><span class="p">.</span><span class="nf">NestedInt64</span><span class="p">(</span><span class="nx">mdb</span><span class="p">.</span><span class="nf">UnstructuredContent</span><span class="p">(),</span> <span class="s">&#34;spec&#34;</span><span class="p">,</span> <span class="s">&#34;members&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">found</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;members field not found on MongoDB spec&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">scaled</span> <span class="o">:=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">members</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nx">proportion</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">patch</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{}{</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;op&#34;</span><span class="p">:</span>    <span class="s">&#34;replace&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;path&#34;</span><span class="p">:</span>  <span class="s">&#34;/spec/members&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;value&#34;</span><span class="p">:</span> <span class="nx">scaled</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">payload</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">patch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">mongoDBClient</span><span class="p">.</span><span class="nf">Patch</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">types</span><span class="p">.</span><span class="nx">JSONPatchType</span><span class="p">,</span> <span class="nx">payload</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">PatchOptions</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Here we leverage <code>unstructured.NestedInt64</code> to access only the field that we are interested in, keeping our coupling to the MongoDB CRD to a minimum while also being able to manipulate the resource data with type safety.</p>
+<p>The <code>unstructured</code> package has lots of helpers like this, not only for reading but also for writing to any field on the resource.</p>
+<p>Performing all the usual operations on Kubernetes (get, list, watch, create, patch, and delete) follow the same approach: provide the <code>scheme.GroupVersionResource</code> and handle the <code>unstructured.Unstructured</code> result.</p>
+<h2 id="controller-with-a-dynamic-client">Controller with a dynamic client</h2>
+<p>More advanced but frequent use of a Kubernetes client is to build a controller that reacts to changes on the actual cluster state to bring it to the desired state.</p>
+<p>Usually, we leverage an Informer, a component provided by <code>k8s.io/client-go</code>, that runs a handler when changes are detected, created from a typed client. Luckily the <code>dynamic</code> package also provides an Informer component that we can use.</p>
+<p>For example, if we want to capture when a MongoDB is deleted to clean the associated <code>PersistentVolumeClaims</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">utilruntime</span> <span class="s">&#34;k8s.io/apimachinery/pkg/util/runtime&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/apimachinery/pkg/util/wait&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/client-go/dynamic&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/client-go/dynamic/dynamicinformer&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/client-go/tools/cache&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/client-go/util/workqueue&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">const</span> <span class="nx">maxRetries</span> <span class="p">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">monboDBResource</span> <span class="p">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">GroupVersionResource</span><span class="p">{</span><span class="nx">Group</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity.mongodb.com&#34;</span><span class="p">,</span> <span class="nx">Version</span><span class="p">:</span> <span class="s">&#34;v1&#34;</span><span class="p">,</span> <span class="nx">Resource</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">MongoDBController</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">informer</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">SharedIndexInformer</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">stopper</span>  <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">queue</span>    <span class="nx">workqueue</span><span class="p">.</span><span class="nx">RateLimitingInterface</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewMongoDBController</span><span class="p">(</span><span class="nx">client</span> <span class="nx">dynamic</span><span class="p">.</span><span class="nx">Interface</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">MongoDBController</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">dynInformer</span> <span class="o">:=</span> <span class="nx">dynamicinformer</span><span class="p">.</span><span class="nf">NewDynamicSharedInformerFactory</span><span class="p">(</span><span class="nx">client</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">informer</span> <span class="o">:=</span> <span class="nx">dynInformer</span><span class="p">.</span><span class="nf">ForResource</span><span class="p">(</span><span class="nx">monboDBResource</span><span class="p">).</span><span class="nf">Informer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">stopper</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">queue</span> <span class="o">:=</span> <span class="nx">workqueue</span><span class="p">.</span><span class="nf">NewRateLimitingQueue</span><span class="p">(</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">DefaultControllerRateLimiter</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">informer</span><span class="p">.</span><span class="nf">AddEventHandler</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">ResourceEventHandlerFuncs</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DeleteFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">key</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">DeletionHandlingMetaNamespaceKeyFunc</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">queue</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">MongoDBController</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">informer</span><span class="p">:</span> <span class="nx">informer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">queue</span><span class="p">:</span> <span class="nx">queue</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stopper</span><span class="p">:</span> <span class="nx">stopper</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MongoDBController</span><span class="p">)</span> <span class="nf">Stop</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">close</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">stopper</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MongoDBController</span><span class="p">)</span> <span class="nf">Run</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleCrash</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">ShutDown</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="nx">m</span><span class="p">.</span><span class="nx">informer</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">stopper</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// wait for the caches to synchronize before starting the worker
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="p">!</span><span class="nx">cache</span><span class="p">.</span><span class="nf">WaitForCacheSync</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">stopper</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">informer</span><span class="p">.</span><span class="nx">HasSynced</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;timed out waiting for caches to sync&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// runWorker will loop until some problem happens. The wait.Until will then restart the worker after one second
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">wait</span><span class="p">.</span><span class="nf">Until</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">runWorker</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">stopper</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MongoDBController</span><span class="p">)</span> <span class="nf">runWorker</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">key</span><span class="p">,</span> <span class="nx">quit</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">quit</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">err</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">.</span><span class="nf">processItem</span><span class="p">(</span><span class="nx">key</span><span class="p">.(</span><span class="kt">string</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">Forget</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">NumRequeues</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nx">maxRetries</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">AddRateLimited</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">Forget</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">m</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">Done</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MongoDBController</span><span class="p">)</span> <span class="nf">processItem</span><span class="p">(</span><span class="nx">mongodb</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Clean up PVCs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Most of this code is standard, like the work queue, informer event handlers, and item processing, of a controller using the typed client.</p>
+<p>Hence, leveraging the decoupling provided by the dynamic client really comes with a low overhead in terms of complexity.</p>
+<h2 id="testing-with-the-dynamic-client">Testing with the dynamic client</h2>
+<p>If we were to scale the use of the dynamic client it is paramount that it is as easy to test as the typed client.</p>
+<p>As in the controller case, the <code>dynamic</code> package provides an equivalent fake client that allows for stubbing objects and asserting actions performed using it.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;k8s.io/apimachinery/pkg/runtime&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">dynamicfake</span> <span class="s">&#34;k8s.io/client-go/dynamic/fake&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">TestDynamicClient</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Setup an Object as mock on the client
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// Write it like its YAML manifest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">mdb</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">unstructured</span><span class="p">.</span><span class="nx">Unstructured</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">mdb</span><span class="p">.</span><span class="nf">SetUnstructuredContent</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;apiVersion&#34;</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity.mongodb.com/v1&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;kind&#34;</span><span class="p">:</span> <span class="s">&#34;MongoDBCommunity&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;metadata&#34;</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;name&#34;</span><span class="p">:</span>      <span class="s">&#34;mongodb-test&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;namespace&#34;</span><span class="p">:</span> <span class="s">&#34;default&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;spec&#34;</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;members&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">dynamicClient</span> <span class="o">:=</span> <span class="nx">dynamicfake</span><span class="p">.</span><span class="nf">NewSimpleDynamicClient</span><span class="p">(</span><span class="nx">runtime</span><span class="p">.</span><span class="nf">NewScheme</span><span class="p">(),</span> <span class="nx">mdb</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Run any logic that depend on the dynamic client
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nf">NotifyMongoDBs</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">dynamicClient</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nf">AssertActions</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span>  <span class="nx">dynamicClient</span><span class="p">.</span><span class="nf">Actions</span><span class="p">(),</span> <span class="p">[]</span><span class="nx">ExpectedAction</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Verb</span><span class="p">:</span> <span class="s">&#34;list&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Namespace</span><span class="p">:</span> <span class="s">&#34;default&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Resource</span><span class="p">:</span> <span class="s">&#34;mongodbcommunity&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Using the <code>unestructured.Unestructured</code> type we can create stub Kubernetes objects using the same syntax as in YAML, but with maps.</p>
+<p>After performing the tested logic we can use <code>dynamicClient.Actions()</code> to see all operations that were performed by our code. However, manually asserting these actions on every test often lead to unreadable code and brittle assertions.</p>
+<p>Hence, I often use a special assertion function <code>AssertActions</code> that verify if every expected action can be found in the performed actions. An important note is that this function does not perform an exact list match, i.e. if a delete operation was performed using the client the test would not break, the only condition for the <code>AssertActions</code> to fail is if the list operation provided on the expected list isn&rsquo;t found. One could change the asserting function or make a sibling function that validates only if the expected actions were performed.</p>
+<p>Although the current implementation is verbose, this function has the benefit of working both with the dynamic and the typed client.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">ExpectedAction</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Verb</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Namespace</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Resource</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Patch action
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">PatchType</span> <span class="nx">types</span><span class="p">.</span><span class="nx">PatchType</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">PatchPayload</span> <span class="p">[]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">AssertActions</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">,</span> <span class="nx">got</span> <span class="p">[]</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">Action</span><span class="p">,</span> <span class="nx">expected</span> <span class="p">[]</span><span class="nx">ExpectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">expected</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">got</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">t</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;executed actions too short, expected %d, got %d&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">expected</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="nx">got</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">expectedAction</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">expected</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nf">AssertExpectedAction</span><span class="p">(</span><span class="nx">got</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;action %d does not match any of the got actions&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">AssertExpectedAction</span><span class="p">(</span><span class="nx">got</span> <span class="p">[]</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">Action</span><span class="p">,</span> <span class="nx">expectedAction</span> <span class="nx">ExpectedAction</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">gotAction</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">got</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Verb</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;get&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">getAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">GetAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">getAction</span><span class="p">.</span><span class="nf">GetName</span><span class="p">()</span> <span class="o">!=</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Name</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">getAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;list&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">listAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">ListAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">listAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;watch&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">watchAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">WatchAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">watchAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;create&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">createAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">CreateAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">createAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;update&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">updateAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">UpdateAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">updateAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;delete&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">deleteAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">DeleteAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">deleteAction</span><span class="p">.</span><span class="nf">GetName</span><span class="p">()</span> <span class="o">!=</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Name</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">deleteAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;patch&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">patchAction</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">gotAction</span><span class="p">.(</span><span class="nx">kubetesting</span><span class="p">.</span><span class="nx">PatchAction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">patchAction</span><span class="p">.</span><span class="nf">GetName</span><span class="p">()</span> <span class="o">!=</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Name</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">patchAction</span><span class="p">,</span> <span class="nx">expectedAction</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">patchAction</span><span class="p">.</span><span class="nf">GetPatchType</span><span class="p">()</span> <span class="o">!=</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">PatchType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="nx">patchBytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">expectedAction</span><span class="p">.</span><span class="nx">PatchPayload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">bytes</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="nx">patchAction</span><span class="p">.</span><span class="nf">GetPatch</span><span class="p">(),</span> <span class="nx">patchBytes</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">validateNamespaceAndResource</span><span class="p">(</span><span class="nx">action</span> <span class="nx">kubetesting</span><span class="p">.</span><span class="nx">Action</span><span class="p">,</span> <span class="nx">expectedAction</span> <span class="nx">ExpectedAction</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">action</span><span class="p">.</span><span class="nf">GetNamespace</span><span class="p">()</span> <span class="o">==</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Namespace</span> <span class="o">&amp;&amp;</span> <span class="nx">action</span><span class="p">.</span><span class="nf">GetResource</span><span class="p">().</span><span class="nx">Resource</span> <span class="o">==</span> <span class="nx">expectedAction</span><span class="p">.</span><span class="nx">Resource</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This asserting function allows for more conditions to be added, like verifying list/watch restrictions and create/update bodies.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Kubernetes ecosystem is rich and every now and then we stumble upon this kind of treasure. I strongly recommend reading through the documentation not only of the <a href="http://k8s.io/client-go"><code>k8s.io/client-go</code></a> project but also from the <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime"><code>sigs.k8s.io/controller-runtime</code></a> project and the <a href="https://kubernetes.io/docs/reference/kubernetes-api/">Kubernetes Reference API</a> documentation.</p>
+]]></content:encoded>
     </item>
     
   </channel>
