@@ -5,6 +5,9 @@ date: "2023-04-23"
 tags: ["ml", "security", "supervised-learning", "ai"]
 math: true
 hideSummary: true
+cover:
+  image: /images/reflections-supervised-learning-in-security.png
+  hidden: true
 ---
 
 Supervised learning is a technique that aims to learn a hypothesis function $h$ that fits a behavior observed in the real-world, which is governed by an unknown function $f$.

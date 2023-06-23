@@ -4,7 +4,7 @@ title: "Notes on Dos and Dont's of Machine Learning in Computer Security"
 date: "2023-06-22"
 tags: ["ml", "security", "supervised-learning", "ai"]
 cover:
-  image: social-feature.png
+  image: /images/notes-on-do-and-donts-of-ml-in-security.png
   hidden: true
 ---
 
