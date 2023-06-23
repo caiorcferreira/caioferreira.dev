@@ -10,7 +10,7 @@ buildFuture: false
 buildExpired: false
 enableEmoji: true
 pygmentsUseClasses: true
-# googleAnalytics: UA-123-45
+googleAnalytics: G-520NXKH2M6
 
 minify:
     disableXML: true
@@ -48,10 +48,8 @@ params:
     author: Caio Ferreira
 
     defaultTheme: auto
-    # disableThemeToggle: true
     ShowShareButtons: true
     ShowReadingTime: true
-    # disableSpecial1stPost: true
     disableScrollToTop: true
     displayFullLangName: true
     ShowPostNavLinks: false
@@ -61,7 +59,7 @@ params:
     ShowBreadCrumbs: false
     ShowFullTextinRSS: true
     # comments: false
-    # images: ["papermod-cover.png"]
+    images: ["blog-cover.png"]
 
     ShareButtons:
     - twitter
@@ -103,9 +101,9 @@ params:
         iconHeight: 28
         iconWidth: 28
 
-    # analytics:
-    #     google:
-    #         SiteVerificationTag: "XYZabc"
+    analytics:
+        google:
+            SiteVerificationTag: "G-520NXKH2M6"
 
     assets:
         disableHLJS: false
