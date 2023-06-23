@@ -3,6 +3,9 @@ author: "Caio Ferreira"
 title: "Notes on Dos and Dont's of Machine Learning in Computer Security"
 date: "2023-06-22"
 tags: ["ml", "security", "supervised-learning", "ai"]
+cover:
+  image: social-feature.png
+  hidden: true
 ---
 
 Following the subject from my last post, [Reflections about Supervised Learning on Security](https://caioferreira.dev/posts/reflections-supervised-ml/reflections-supervised-learning-in-security/), I put down some more thoughts about the implementation of learning-based systems in the Security domain.
