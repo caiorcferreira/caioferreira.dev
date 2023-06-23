@@ -4,11 +4,6 @@
     <title>Series on Simple Made Daily</title>
     <link>https://caioferreira.dev/series/</link>
     <description>Recent content in Series on Simple Made Daily</description>
-    <image>
-      <title>Simple Made Daily</title>
-      <url>https://caioferreira.dev/blog-cover.png</url>
-      <link>https://caioferreira.dev/blog-cover.png</link>
-    </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://caioferreira.dev/series/index.xml" rel="self" type="application/rss+xml" />
   </channel>
