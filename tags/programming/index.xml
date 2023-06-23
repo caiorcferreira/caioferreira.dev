@@ -4,6 +4,11 @@
     <title>programming on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/programming/</link>
     <description>Recent content in programming on Simple Made Daily</description>
+    <image>
+      <title>Simple Made Daily</title>
+      <url>https://caioferreira.dev/blog-cover.png</url>
+      <link>https://caioferreira.dev/blog-cover.png</link>
+    </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 31 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/programming/index.xml" rel="self" type="application/rss+xml" />
