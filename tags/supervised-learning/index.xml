@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/supervised-learning/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Notes on Dos and Don&#39;ts of Machine Learning in Computer Security</title>
-      <link>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/notes-on-do-and-donts-of-ml-in-security/</link>
+      <link>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/notes-on-do-and-donts-of-ml-in-security/</guid>
+      <guid>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/</guid>
       <description>Following the subject from my last post, Reflections about Supervised Learning on Security, I put down some more thoughts about the implementation of learning-based systems in the Security domain.
 This is my extension to the problems and recommendations presented on the paper Dos and Don&amp;rsquo;ts of Machine Learning in Computer Security (Quiring, et al, 2022). I encourage you to also read the paper, as it&amp;rsquo;s excellent and provide a lot of insights about how to better build machine learning models.</description>
       <content:encoded><![CDATA[<p>Following the subject from my last post, <a href="https://caioferreira.dev/posts/reflections-supervised-ml/reflections-supervised-learning-in-security/">Reflections about Supervised Learning on Security</a>, I put down some more thoughts about the implementation of learning-based systems in the Security domain.</p>
