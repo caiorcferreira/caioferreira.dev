@@ -59,7 +59,7 @@ params:
     ShowBreadCrumbs: false
     ShowFullTextinRSS: true
     # comments: false
-    images: ["blog-cover.png"]
+    # images: ["blog-cover.png"]
 
     ShareButtons:
     - twitter
