@@ -1,6 +1,6 @@
 ---
 author: "Caio Ferreira"
-title: "Notes on Dos and Dont's of Machine Learning in Computer Security"
+title: "Notes on Dos and Don'ts of Machine Learning in Computer Security"
 date: "2023-06-22"
 tags: ["ml", "security", "supervised-learning", "ai"]
 cover:
