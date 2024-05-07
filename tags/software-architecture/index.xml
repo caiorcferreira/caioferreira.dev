@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>software-architecture on Simple Made Daily</title>
+    <title>Software-Architecture on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/software-architecture/</link>
-    <description>Recent content in software-architecture on Simple Made Daily</description>
+    <description>Recent content in Software-Architecture on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 31 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/software-architecture/index.xml" rel="self" type="application/rss+xml" />
@@ -70,8 +70,8 @@ This cost is even greater if you work on legacy projects or high changing enviro
 <ul>
 <li><a href="https://www.infoq.com/presentations/debt-aware-culture">https://www.infoq.com/presentations/debt-aware-culture</a></li>
 <li><a href="https://martinfowler.com/bliki/TechnicalDebtQuadrant.html">https://martinfowler.com/bliki/TechnicalDebtQuadrant.html</a></li>
-<li><a href="https://www.infoq.com/minibooks/emag-technical-debt?utm_source=minibooks_about_TechnicalDebt&amp;utm_medium=link&amp;utm_campaign=TechnicalDebt">https://www.infoq.com/minibooks/emag-technical-debt?utm_source=minibooks_about_TechnicalDebt&amp;utm_medium=link&amp;utm_campaign=TechnicalDebt</a></li>
-<li><a href="https://books.google.com.br/books?id=pKVFDwAAQBAJ&amp;lpg=PA18&amp;ots=Gc9vC8vf80&amp;dq=Software%20Quality%20Assurance%20Pressman%202014&amp;hl=pt-BR&amp;pg=PA18#v=onepage&amp;q=Software%20Quality%20Assurance%20Pressman%202014&amp;f=false">https://books.google.com.br/books?id=pKVFDwAAQBAJ&amp;lpg=PA18&amp;ots=Gc9vC8vf80&amp;dq=Software Quality Assurance Pressman 2014&amp;hl=pt-BR&amp;pg=PA18#v=onepage&amp;q=Software Quality Assurance Pressman 2014&amp;f=false</a></li>
+<li><a href="https://www.infoq.com/minibooks/emag-technical-debt?utm_source=minibooks_about_TechnicalDebt&utm_medium=link&utm_campaign=TechnicalDebt">https://www.infoq.com/minibooks/emag-technical-debt?utm_source=minibooks_about_TechnicalDebt&amp;utm_medium=link&amp;utm_campaign=TechnicalDebt</a></li>
+<li><a href="https://books.google.com.br/books?id=pKVFDwAAQBAJ&lpg=PA18&ots=Gc9vC8vf80&dq=Software%20Quality%20Assurance%20Pressman%202014&hl=pt-BR&pg=PA18#v=onepage&q=Software%20Quality%20Assurance%20Pressman%202014&f=false">https://books.google.com.br/books?id=pKVFDwAAQBAJ&amp;lpg=PA18&amp;ots=Gc9vC8vf80&amp;dq=Software Quality Assurance Pressman 2014&amp;hl=pt-BR&amp;pg=PA18#v=onepage&amp;q=Software Quality Assurance Pressman 2014&amp;f=false</a></li>
 </ul>
 ]]></content:encoded>
     </item>

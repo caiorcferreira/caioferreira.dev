@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>state machine on Simple Made Daily</title>
+    <title>State Machine on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/state-machine/</link>
-    <description>Recent content in state machine on Simple Made Daily</description>
+    <description>Recent content in State Machine on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 18 Dec 2018 12:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/state-machine/index.xml" rel="self" type="application/rss+xml" />
@@ -18,7 +18,7 @@ Today we will try to solve the ambiguity in the concept of state, highlighting t
 Introduction On the last couple of months, I dove into the topic of State Machines and how we can design UI’s with this concept in order to provide better semantic and predictability to our application.</description>
       <content:encoded><![CDATA[<p><img loading="lazy" src="./cover.jpg" alt=""  />
 </p>
-<p>Photo by <a href="https://unsplash.com/photos/hzdgFPz1V24?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Annie Spratt</a> on <a href="https://unsplash.com/search/photos/machine?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+<p>Photo by <a href="https://unsplash.com/photos/hzdgFPz1V24?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Annie Spratt</a> on <a href="https://unsplash.com/search/photos/machine?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 <p>Today we will try to solve the ambiguity in the concept of state, highlighting the differences in the two main notions about it. The post describes the nature of each one, some use cases and how they fit in the object and functional paradigms.</p>
 <h1 id="introduction">Introduction</h1>
 <p>On the last couple of months, I dove into the topic of State Machines and how we can design UI’s with this concept in order to provide better semantic and predictability to our application. When reading and talking about it often I have to stop and clarify which of the two ideas about state I am referring to:</p>

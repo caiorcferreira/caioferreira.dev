@@ -1,12 +1,137 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>security on Simple Made Daily</title>
+    <title>Security on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/security/</link>
-    <description>Recent content in security on Simple Made Daily</description>
+    <description>Recent content in Security on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 07 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Como estudar na área de Tecnologia?</title>
+      <link>https://caioferreira.dev/posts/aprendendo-em-tech/aprendendo-em-tech/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/aprendendo-em-tech/aprendendo-em-tech/</guid>
+      <description>Introdução Nos últimos dois meses, várias pessoas me procuraram para saber como organizo meus estudos. Decidi, então, compilar um resumo das minhas técnicas e métodos. Espero que encontrem aqui ferramentas úteis!
+Método de estudos Primeiramente, o método de estudo é algo muito pessoal. As práticas que mencionarei tiveram êxito para mim. A primeira e mais importante tarefa é começar a desenvolver o seu método:
+Com que frequência você deseja estudar? Como você vai organizar o conhecimento?</description>
+      <content:encoded><![CDATA[<h2 id="introdução">Introdução</h2>
+<p>Nos últimos dois meses, várias pessoas me procuraram para saber como organizo meus estudos. Decidi, então, compilar um resumo das minhas técnicas e métodos. Espero que encontrem aqui ferramentas úteis!</p>
+<h2 id="método-de-estudos">Método de estudos</h2>
+<p>Primeiramente, o método de estudo é algo muito pessoal. As práticas que mencionarei tiveram êxito para mim. A primeira e mais importante tarefa é começar a desenvolver o seu método:</p>
+<ul>
+<li>Com que frequência você deseja estudar?</li>
+<li>Como você vai organizar o conhecimento?</li>
+<li>Que tipo de conteúdo mais te engaja (livros, vídeo aulas, cursos, etc)?</li>
+<li>Quanta estrutura você quer dar aos seus estudos? Você funciona melhor com um planejamento detalhado e prazos, ou prefere algo mais flexível, seguindo os tópicos que mais capturam sua atenção no momento?</li>
+</ul>
+<p>Posso falar por mim: estudo todos os dias, leio artigos ou livros sempre que possível. Organizo meu conhecimento em notas no <strong>Obsidian</strong>, usando uma estrutura que combina o <strong>Zettelkasten</strong> com o método <strong>PARA</strong>. Prefiro, de longe, conteúdos escritos e não gosto de fazer grandes planejamentos; estudo o que tenho vontade, quando tenho vontade.</p>
+<h2 id="fontes-de-informação">Fontes de informação</h2>
+<p>Explico que existem duas formas de desenvolvimento: horizontal e vertical.</p>
+<ul>
+<li>O desenvolvimento horizontal foca em criar uma base de conhecimento em um universo, abrangendo vários tópicos. Isso não implica em um estudo superficial, mas em entender como os tópicos se relacionam em um contexto. Dependendo do universo, como em segurança da informação, esse tipo de estudo pode ser um dos mais desafiadores.</li>
+<li>O desenvolvimento vertical, por sua vez, foca em aprofundar um tópico e aprender o máximo possível sobre ele. O objetivo é estudar como se quisesse se tornar um especialista naquele assunto.</li>
+</ul>
+<p>Na carreira, é essencial manter ambos os tipos de desenvolvimento ativos. Para isso, recomendo realizar uma curadoria constante de diferentes tipos de fontes de informação:</p>
+<ul>
+<li><strong>Newsletters</strong> (horizontal): para mim, são a melhor ferramenta para um profissional de tecnologia hoje. Faço uma seleção contínua das newsletters que assino. Ao receber uma nova publicação, seleciono links relevantes, adiciono-os à minha lista de leitura e os consumo gradualmente.</li>
+<li><strong>Feeds de agregadores</strong> (horizontal): sites como Hackersnews e Lobste.rs têm feeds RSS organizados por tema. Funcionam como uma linha do tempo de uma rede social, com muito ruído, mas ocasionalmente você encontra artigos úteis. É crucial saber gerenciar fontes de alto e baixo ruído para que não interfiram na eficiência do seu consumo.</li>
+<li><strong>Blogs/Publicações especializadas</strong> (vertical): prefiro separar essas fontes dos livros tradicionais porque geralmente são mais sucintas, têm mais exemplos e exercícios práticos e são mais atualizadas que os livros. Exemplos incluem: <a href="https://quii.gitbook.io/learn-go-with-tests">https://quii.gitbook.io/learn-go-with-tests</a> e <a href="https://www.fuzzingbook.org/">https://www.fuzzingbook.org/</a>.</li>
+<li><strong>Papers</strong> (vertical): começar a ler artigos acadêmicos pode ser desafiador, mas é um passo importante para conhecer a vanguarda do desenvolvimento. Quanto antes começar, melhor.</li>
+<li><strong>Livros e cursos</strong> (vertical): geralmente os utilizo para tópicos que evoluem mais lentamente, como algoritmos, matemática e criptografia. Nessas áreas, você encontrará publicações excelentes e ainda relevantes.</li>
+</ul>
+<p>Com o tempo, ao consumir conteúdos, você acumulará links, artigos, livros, ferramentas: todo tipo de referência. Cuide bem dessa coleção, escolha uma forma de organização, um aplicativo, o que preferir. Essa coleção se tornará seu jardim, de onde extrairá insumos para produzir conhecimento.</p>
+<p>No entanto, é fundamental <strong>não cair</strong> na <a href="https://zettelkasten.de/posts/collectors-fallacy/">falácia do colecionador</a>, onde simplesmente acumulamos pilhas de materiais e nos damos por satisfeitos.</p>
+<h2 id="organizando-conhecimento">Organizando conhecimento</h2>
+<p>Um dos meus maiores arrependimentos foi não ter começado a manter notas organizadas mais cedo! Minha maior recomendação aqui é a simplicidade. É muito fácil cair na armadilha de otimizar a estrutura das suas notas e ser extremamente produtivo (eu já caí várias vezes), criando um sistema demasiadamente complicado.</p>
+<p>Algumas coisas que faço para estruturar o conhecimento são:</p>
+<ul>
+<li>Notas de Literatura: fazer notas detalhadas e com suas próprias palavras custa muito tempo, então eu criei um tipo diferente de nota chamada Nota de Literatura. Nela, deposito informações relevantes da fonte de informação, por vezes copiando diretamente, outras vezes reescrevendo.
+<ul>
+<li>Assistente AI: embora o objetivo seja produzir notas mais simples e rápidas, a AI tem me ajudado a produzir notas de literatura com qualidade de notas de assunto. Eu uso um prompt que gera uma lista de perguntas sobre os tópicos abordados na fonte de informação. Isso tem tornado minhas notas de literatura muito mais eficientes. O prompt que uso está disponível publicamente: <a href="https://github.com/caiorcferreira/prompts/blob/main/patterns/thought_provoking.md">thought_provoking prompt</a>.</li>
+</ul>
+</li>
+<li>Notas de Assunto (Subject/Evergreen notes): essas notas são o personagem principal. Elas têm uma vida longa, são atualizadas sempre que aprendo algo novo sobre o assunto e são escritas com minhas próprias palavras. A técnica mais importante para mim aqui é escrever como se estivesse explicando para outra pessoa.</li>
+</ul>
+<h2 id="aplicando-seu-método">Aplicando seu método</h2>
+<p>Existem ainda desafios únicos durante o andamento dos seus estudos. Uma pergunta recorrente é: eu sei qual assunto quero estudar, sei qual tipo de estudo (horizontal ou vertical) e tenho uma curadoria de fontes - <strong>como escolher qual material consumir?</strong> Nesse caso, meu método é:</p>
+<ol>
+<li>Seleciono material relacionado ao tema que já possa ter armazenado;</li>
+<li>Uso <a href="https://pt.linkedin.com/pulse/entendendo-o-google-hacking-na-pratica-e-otimizando-suas-janones">DORKs</a> para pesquisar material no histórico de newsletters e feeds de agregadores.</li>
+<li>Dedico um tempo navegando entre os diferentes materiais selecionados, até encontrar um (ou alguns) com um bom equilíbrio entre didática e cobertura do assunto.</li>
+</ol>
+<p>Isso acaba levando a um começo mais lento, porém, na minha experiência, ele se paga, pois me dá a oportunidade de selecionar materiais de estudo de maior qualidade.</p>
+<p>Outro desafio comum é: <strong>como tirar dúvidas sobre o assunto?</strong> Atualmente, LLMs têm sido de grande ajuda para mim (desde que você saiba como lidar com possíveis alucinações). Buscar por comunidades dedicadas ao assunto no Reddit também costuma ter bons resultados.
+No entanto, a melhor ferramenta é sua própria coleção de materiais: busque por outros materiais que possam explicar o mesmo conceito a partir de diferentes pontos de vista. Eventualmente, você irá montar um quebra-cabeça, com uma compreensão muito mais abrangente do assunto.</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>A jornada do aprendizado é profundamente pessoal e varia de indivíduo para indivíduo. As estratégias e métodos que compartilhei refletem minhas experiências e preferências pessoais. É importante encontrar o equilíbrio entre a absorção de informação e a criação de conhecimento, evitando a armadilha de apenas acumular referências.</p>
+<p>Lembre-se de que a chave para um estudo eficaz não está apenas em selecionar os materiais certos, mas também em como você organiza e interage com essas informações ao longo do tempo. Espero que este guia sirva como um ponto de partida para você desenvolver um método de estudo que seja tão único e eficaz quanto suas próprias aspirações e necessidades de aprendizado.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>How to learn in the Tech field?</title>
+      <link>https://caioferreira.dev/posts/learning-in-tech/learning-in-tech/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/posts/learning-in-tech/learning-in-tech/</guid>
+      <description>Introduction Over the past two months, several people have approached me to find out how I organize my studies. Therefore, I decided to compile a summary of my techniques and methods. I hope you find useful tools here!
+Study Method Firstly, the study method is something very personal. The practices I will mention have been successful for me. The first and most important task is to start developing your method:</description>
+      <content:encoded><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>Over the past two months, several people have approached me to find out how I organize my studies. Therefore, I decided to compile a summary of my techniques and methods. I hope you find useful tools here!</p>
+<h2 id="study-method">Study Method</h2>
+<p>Firstly, the study method is something very personal. The practices I will mention have been successful for me. The first and most important task is to start developing your method:</p>
+<ul>
+<li>How often do you want to study?</li>
+<li>How will you organize knowledge?</li>
+<li>What type of content engages you the most (books, video lessons, courses, etc)?</li>
+<li>How much structure do you want to give your studies? Do you function better with detailed planning and deadlines, or do you prefer something more flexible, following the topics that capture your attention at the moment?</li>
+</ul>
+<p>I can speak for myself: I study every day, read articles or books whenever possible. I organize my knowledge in notes in <strong>Obsidian</strong>, using a structure that combines the <strong>Zettelkasten</strong> method with the <strong>PARA</strong> method. I vastly prefer written content and do not like making extensive plans; I study what I want, when I want.</p>
+<h2 id="sources-of-information">Sources of Information</h2>
+<p>I explain that there are two forms of development: horizontal and vertical.</p>
+<ul>
+<li>Horizontal development focuses on creating a knowledge base in a universe, covering various topics. This does not imply superficial study but understanding how the topics relate in a context. Depending on the universe, such as in information security, this type of study can be one of the most challenging.</li>
+<li>Vertical development, on the other hand, focuses on deepening a topic and learning as much as possible about it. The goal is to study as if you wanted to become an expert on that subject.</li>
+</ul>
+<p>In your career, it is essential to keep both types of development active. For this, I recommend constantly curating different types of information sources:</p>
+<ul>
+<li><strong>Newsletters</strong> (horizontal): for me, they are the best tool for a technology professional today. I make a continuous selection of the newsletters I subscribe to. When I receive a new publication, I select relevant links, add them to my reading list, and consume them gradually.</li>
+<li><strong>Feed aggregators</strong> (horizontal): sites like Hackersnews and Lobste.rs have RSS feeds organized by theme. They work like a social network timeline, with a lot of noise, but occasionally you find useful articles. It is crucial to know how to manage high and low noise sources so that they do not interfere with the efficiency of your consumption.</li>
+<li><strong>Blogs/Specialized publications</strong> (vertical): I prefer to separate these sources from traditional books because they are usually more concise, have more examples and practical exercises, and are more up-to-date than books. Examples include: <a href="https://quii.gitbook.io/learn-go-with-tests">https://quii.gitbook.io/learn-go-with-tests</a> and <a href="https://www.fuzzingbook.org/">https://www.fuzzingbook.org/</a>.</li>
+<li><strong>Papers</strong> (vertical): starting to read academic papers can be challenging, but it is an important step to know the cutting edge of development. The sooner you start, the better.</li>
+<li><strong>Books and courses</strong> (vertical): I generally use them for topics that evolve more slowly, such as algorithms, mathematics, and cryptography. In these areas, you will find excellent publications that are still relevant.</li>
+</ul>
+<p>Over time, as you consume content, you will accumulate links, articles, books, tools: all kinds of references. Take good care of this collection, choose a way to organize it, an app, whatever you prefer. This collection will become your garden, from which you will draw inputs to produce knowledge.</p>
+<p>However, it is crucial <strong>not to fall</strong> into the <a href="https://zettelkasten.de/posts/collectors-fallacy/">collector&rsquo;s fallacy</a>, where we simply accumulate piles of materials and are satisfied with that.</p>
+<h2 id="organizing-knowledge">Organizing Knowledge</h2>
+<p>One of my biggest regrets was not starting to keep organized notes earlier! My biggest recommendation here is simplicity. It&rsquo;s very easy to fall into the trap of optimizing your note structure and being extremely productive (I&rsquo;ve fallen several times), creating an overly complicated system.</p>
+<p>Some things I do to structure knowledge are:</p>
+<ul>
+<li>Literature Notes: making detailed notes in your own words takes a lot of time, so I created a different type of note called Literature Note. In it, I deposit relevant information from the source of information, sometimes copying directly, other times rewriting.
+<ul>
+<li>AI Assistant: although the goal is to produce simpler and quicker notes, AI has helped me produce literature notes with the quality of subject notes. I use a prompt that generates a list of questions about the topics covered in the source of information. This has made my literature notes much more efficient. The prompt I use is publicly available: <a href="https://github.com/caiorcferreira/prompts/blob/main/patterns/thought_provoking.md">thought_provoking prompt</a>.</li>
+</ul>
+</li>
+<li>Subject Notes (Subject/Evergreen notes): these notes are the main character. They have a long life, are updated whenever I learn something new about the subject, and are written in my own words. The most important technique for me here is writing as if I were explaining to someone else.</li>
+</ul>
+<h2 id="applying-your-method">Applying Your Method</h2>
+<p>There are still unique challenges during the course of your studies. A recurring question is: I know which subject I want to study, I know what type of study (horizontal or vertical) and I have a curation of sources - <strong>how to choose which material to consume?</strong> In this case, my method is:</p>
+<ol>
+<li>I select material related to the theme that I may have already stored;</li>
+<li>I use <a href="https://pt.linkedin.com/pulse/understanding-google-hacking-in-practice-and-optimizing-your-janones">DORKs</a> to search for material in the newsletters&rsquo;s archives and feed aggregators.</li>
+<li>Then, I dedicate some time navigating among the selected materials, until I find one (or a few) with a good balance between didactic approach and subject coverage.</li>
+</ol>
+<p>This ends up leading to a slower start, but in my experience, it pays off, as it gives me the opportunity to select higher quality study materials.</p>
+<p>Another common challenge is: <strong>how to ask questions about the subject?</strong> Currently, LLMs have been of great help to me (as long as you know how to deal with possible hallucinations). Searching for dedicated communities on Reddit often yields good results.
+However, the best tool is your own collection of materials: look for other materials that may explain the same concept from different perspectives. Eventually, you will put together a puzzle, gaining a much more comprehensive understanding of the subject.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The learning journey is deeply personal and varies from individual to individual. The strategies and methods I have shared reflect my experiences and personal preferences. It&rsquo;s important to find a balance between absorbing information and creating knowledge, avoiding the trap of just accumulating references.</p>
+<p>Remember, the key to effective study is not only in selecting the right materials but also in how you organize and interact with these materials over time. I hope this guide serves as a starting point for you to develop a study method that is as unique and effective as your own learning aspirations and needs.</p>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>Notes on Dos and Don&#39;ts of Machine Learning in Computer Security</title>
       <link>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/</link>
@@ -322,7 +447,7 @@ This would be the case of a change in the probability distribution from which th
 <p>However, there is one subtle (<em>pun intended</em>) behavior from <code>subtle.ConstantTimeCompare</code> that we must be aware before deploying our solution to production. When the byte slices have different lengths, the functions returns earlier without performing the bitwise operations. This is natural because it does an XOR between each pair of bits from each slice, and with slices of different sizes, there would be bits from one slice without a matching pair to be combined with. <strong>Because of it, an adversary could measure that keys with the wrong length have a smaller response time than keys with the correct length, hence leaking the key length</strong>. It would only be a vulnerability if you use a short key that is easily brute-forced, but with a simple 30 character key using the UTF-8 printable characters you would have <code>30^95 = 2.12089515 × 10^140</code> possible keys.</p>
 <p>Finally, we&rsquo;ve built a simple, secure and efficient API Key solution that should handle a lot of uses cases without additional infrastructure or complexity. Using a basic understanding of threats and the Golang standard library, we could do a security-oriented design instead of leaving security as an after-though in an iterative way.</p>
 <hr>
-<p>Photo by <a href="https://unsplash.com/@silas_crioco?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Silas Köhler</a> on <a href="https://unsplash.com/s/photos/key?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<p>Photo by <a href="https://unsplash.com/@silas_crioco?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Silas Köhler</a> on <a href="https://unsplash.com/s/photos/key?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.</p>
 ]]></content:encoded>
     </item>
     

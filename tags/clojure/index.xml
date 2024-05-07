@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>clojure on Simple Made Daily</title>
+    <title>Clojure on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/clojure/</link>
-    <description>Recent content in clojure on Simple Made Daily</description>
+    <description>Recent content in Clojure on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 08 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/clojure/index.xml" rel="self" type="application/rss+xml" />
@@ -30,7 +30,7 @@ Photo by <a href="https://unsplash.com/@roman_lazygeek">Roman Mager</a> on <a hr
 <p><a href="http://eloquentjavascript.net/1st_edition/chapter6.html">Eloquent Javascript: Functional Programming</a> - The Eloquent Javascript&rsquo;s chapter about functional programming. It is a hands on to building fundamental tools by hand, understanding its applications and usages.</p>
 <p><a href="http://shop.oreilly.com/product/0636920030331.do">Becoming Functional</a> - An excellent book about the functional paradigm as a whole, presenting topics from functional principles like pure functions to advanced techniques like pattern matching. Unfortunately, the example is in Java.</p>
 <h2 id="intermediate">Intermediate</h2>
-<p><a href="https://www.youtube.com/watch?v=E8I19uA-wGY&amp;ab_channel=IvanPlyusnin">Functional Design Patterns</a> - An amazing talk about how to combine different pieces of pure functions into more complex applications.</p>
+<p><a href="https://www.youtube.com/watch?v=E8I19uA-wGY&ab_channel=IvanPlyusnin">Functional Design Patterns</a> - An amazing talk about how to combine different pieces of pure functions into more complex applications.</p>
 <p><a href="https://vimeo.com/153097877">Javascript Combinators</a> - a talk from one of the greatest names in Functional Javascript, Reginald “Raganwald” Braithwaite, where he explores the concept of composition and introduces the Combinators pattern, a powerful functional tool inspired by Lambda Calculus.</p>
 <p><a href="https://mostly-adequate.gitbooks.io/mostly-adequate-guide/">Professor Frisby Mostly Adequate Guide to Functional Programming</a> - An excellent resource on more complex functional patterns using Category Theory. This approach is less common on Front End and probably we can get most of the benefits of the functional paradigm without the complexity of an entire branch of mathematics.</p>
 <h2 id="advanced">Advanced</h2>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>distributed systems on Simple Made Daily</title>
+    <title>Distributed Systems on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/distributed-systems/</link>
-    <description>Recent content in distributed systems on Simple Made Daily</description>
+    <description>Recent content in Distributed Systems on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 04 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/distributed-systems/index.xml" rel="self" type="application/rss+xml" />
@@ -16,7 +16,7 @@
       <description>Before jumping into tutorials, let&amp;#39;s try to understagind how and if a cache fit in your architecture</description>
       <content:encoded><![CDATA[<p><img loading="lazy" src="./cover.jpg" alt=""  />
 
-Photo by <a href="https://unsplash.com/@joshstyle?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Joshua Coleman</a> on <a href="https://unsplash.com/s/photos/storage?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+Photo by <a href="https://unsplash.com/@joshstyle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Joshua Coleman</a> on <a href="https://unsplash.com/s/photos/storage?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 <p>Caching is one of the most popular tools used to scale systems and anyone looking to maintain high throughput, resilient and cost-effective products should understand how to use it because it is financially impractical to apply only compute resources in order to meet the access demands.</p>
 <p>Knowing the basics about it and what parameters you should be looking when choosing your solution is rarely addressed and hence is the purpose of this article.</p>
 <h2 id="dont-rush-tour-decision">Don&rsquo;t rush tour decision</h2>

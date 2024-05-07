@@ -6,9 +6,39 @@
     <description>Recent content in Tags on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 07 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ai</title>
+      <title>Career</title>
+      <link>https://caioferreira.dev/tags/career/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/career/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Engineering</title>
+      <link>https://caioferreira.dev/tags/engineering/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/engineering/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://caioferreira.dev/tags/security/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://caioferreira.dev/tags/security/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Ai</title>
       <link>https://caioferreira.dev/tags/ai/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       
@@ -18,7 +48,7 @@
     </item>
     
     <item>
-      <title>ml</title>
+      <title>Ml</title>
       <link>https://caioferreira.dev/tags/ml/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       
@@ -28,17 +58,7 @@
     </item>
     
     <item>
-      <title>security</title>
-      <link>https://caioferreira.dev/tags/security/</link>
-      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://caioferreira.dev/tags/security/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>supervised-learning</title>
+      <title>Supervised-Learning</title>
       <link>https://caioferreira.dev/tags/supervised-learning/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       
@@ -48,7 +68,7 @@
     </item>
     
     <item>
-      <title>authentication</title>
+      <title>Authentication</title>
       <link>https://caioferreira.dev/tags/authentication/</link>
       <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
       
@@ -58,7 +78,7 @@
     </item>
     
     <item>
-      <title>authorization</title>
+      <title>Authorization</title>
       <link>https://caioferreira.dev/tags/authorization/</link>
       <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
       
@@ -68,7 +88,7 @@
     </item>
     
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://caioferreira.dev/tags/go/</link>
       <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
       
@@ -78,7 +98,7 @@
     </item>
     
     <item>
-      <title>kubernetes</title>
+      <title>Kubernetes</title>
       <link>https://caioferreira.dev/tags/kubernetes/</link>
       <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
       
@@ -88,7 +108,7 @@
     </item>
     
     <item>
-      <title>testing</title>
+      <title>Testing</title>
       <link>https://caioferreira.dev/tags/testing/</link>
       <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
       
@@ -98,7 +118,7 @@
     </item>
     
     <item>
-      <title>architecture</title>
+      <title>Architecture</title>
       <link>https://caioferreira.dev/tags/architecture/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
@@ -108,7 +128,7 @@
     </item>
     
     <item>
-      <title>caching</title>
+      <title>Caching</title>
       <link>https://caioferreira.dev/tags/caching/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
@@ -118,7 +138,7 @@
     </item>
     
     <item>
-      <title>distributed systems</title>
+      <title>Distributed Systems</title>
       <link>https://caioferreira.dev/tags/distributed-systems/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
@@ -128,7 +148,7 @@
     </item>
     
     <item>
-      <title>clojure</title>
+      <title>Clojure</title>
       <link>https://caioferreira.dev/tags/clojure/</link>
       <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
@@ -138,7 +158,7 @@
     </item>
     
     <item>
-      <title>functional</title>
+      <title>Functional</title>
       <link>https://caioferreira.dev/tags/functional/</link>
       <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
@@ -148,7 +168,7 @@
     </item>
     
     <item>
-      <title>javascript</title>
+      <title>Javascript</title>
       <link>https://caioferreira.dev/tags/javascript/</link>
       <pubDate>Tue, 08 Oct 2019 00:00:00 +0000</pubDate>
       
@@ -158,7 +178,7 @@
     </item>
     
     <item>
-      <title>programming</title>
+      <title>Programming</title>
       <link>https://caioferreira.dev/tags/programming/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -168,7 +188,7 @@
     </item>
     
     <item>
-      <title>project-management</title>
+      <title>Project-Management</title>
       <link>https://caioferreira.dev/tags/project-management/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -178,7 +198,7 @@
     </item>
     
     <item>
-      <title>qa</title>
+      <title>Qa</title>
       <link>https://caioferreira.dev/tags/qa/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -188,7 +208,7 @@
     </item>
     
     <item>
-      <title>software-architecture</title>
+      <title>Software-Architecture</title>
       <link>https://caioferreira.dev/tags/software-architecture/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -198,7 +218,7 @@
     </item>
     
     <item>
-      <title>oop</title>
+      <title>Oop</title>
       <link>https://caioferreira.dev/tags/oop/</link>
       <pubDate>Tue, 18 Dec 2018 12:00:00 +0000</pubDate>
       
@@ -208,7 +228,7 @@
     </item>
     
     <item>
-      <title>state machine</title>
+      <title>State Machine</title>
       <link>https://caioferreira.dev/tags/state-machine/</link>
       <pubDate>Tue, 18 Dec 2018 12:00:00 +0000</pubDate>
       

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>authentication on Simple Made Daily</title>
+    <title>Authentication on Simple Made Daily</title>
     <link>https://caioferreira.dev/tags/authentication/</link>
-    <description>Recent content in authentication on Simple Made Daily</description>
+    <description>Recent content in Authentication on Simple Made Daily</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 05 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://caioferreira.dev/tags/authentication/index.xml" rel="self" type="application/rss+xml" />
@@ -217,7 +217,7 @@
 <p>However, there is one subtle (<em>pun intended</em>) behavior from <code>subtle.ConstantTimeCompare</code> that we must be aware before deploying our solution to production. When the byte slices have different lengths, the functions returns earlier without performing the bitwise operations. This is natural because it does an XOR between each pair of bits from each slice, and with slices of different sizes, there would be bits from one slice without a matching pair to be combined with. <strong>Because of it, an adversary could measure that keys with the wrong length have a smaller response time than keys with the correct length, hence leaking the key length</strong>. It would only be a vulnerability if you use a short key that is easily brute-forced, but with a simple 30 character key using the UTF-8 printable characters you would have <code>30^95 = 2.12089515 × 10^140</code> possible keys.</p>
 <p>Finally, we&rsquo;ve built a simple, secure and efficient API Key solution that should handle a lot of uses cases without additional infrastructure or complexity. Using a basic understanding of threats and the Golang standard library, we could do a security-oriented design instead of leaving security as an after-though in an iterative way.</p>
 <hr>
-<p>Photo by <a href="https://unsplash.com/@silas_crioco?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Silas Köhler</a> on <a href="https://unsplash.com/s/photos/key?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<p>Photo by <a href="https://unsplash.com/@silas_crioco?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Silas Köhler</a> on <a href="https://unsplash.com/s/photos/key?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.</p>
 ]]></content:encoded>
     </item>
     

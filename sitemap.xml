@@ -2,6 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://caioferreira.dev/tags/career/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/aprendendo-em-tech/aprendendo-em-tech/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/engineering/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/learning-in-tech/learning-in-tech/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/posts/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/security/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://caioferreira.dev/tags/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://caioferreira.dev/tags/ai/</loc>
     <lastmod>2023-06-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,19 +35,7 @@
     <loc>https://caioferreira.dev/posts/notes-on-do-and-donts-of-ml-in-security/</loc>
     <lastmod>2023-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://caioferreira.dev/posts/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://caioferreira.dev/tags/security/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://caioferreira.dev/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://caioferreira.dev/tags/supervised-learning/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://caioferreira.dev/tags/</loc>
     <lastmod>2023-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://caioferreira.dev/posts/reflections-supervised-ml/reflections-supervised-learning-in-security/</loc>
